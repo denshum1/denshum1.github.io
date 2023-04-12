@@ -1,0 +1,25 @@
+Create table _User(U_id int identity (1,1) primary key,
+U_login nvarchar(50) not null,U_password nvarchar(50) not null
+)
+Create table Category(C_id int Primary key  not null,
+C_name nvarchar(50) not null,C_descr nvarchar(500) not null
+)
+Create table Product
+(p_id int Primary key not null,p_name nvarchar(50) not null,
+p_avail bit not null,P_categ_id int not null,
+foreign key (p_categ_id) references Category(C_id),
+)
+create table Shop_cart(S_user_id int not null,
+S_product_id int not null,S_amount_of_prod int not null
+foreign key (s_user_id) references _user(u_id),foreign key (s_product_id) references product(p_id),
+primary key(s_user_id, s_product_id))
+
+Create table Delivery(d_id int  not null,
+d_user_id int not null,d_status nvarchar(50) not null,
+Primary key (d_id),foreign key (d_user_id) references _User(U_id)
+)
+create table Goods(
+g_prod_id int not null,g_deliv_id int not null,
+g_method int not nullforeign key(g_prod_id) references product(p_id),
+foreign key(g_deliv_id) references delivery(d_id),primary key(g_prod_id, g_deliv_id)
+)
